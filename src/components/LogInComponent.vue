@@ -39,6 +39,7 @@ export default {
     },
     created(){
         this.getUserApi();
+        this.$router.push("/").catch(()=>{});
     },
     methods: {
 

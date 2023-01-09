@@ -12,12 +12,15 @@
 
 <script>
 import {mapMutations, mapGetters} from 'vuex'
-export default {
+export default { 
     name:'UserLogedComponent',
     methods:{
         ...mapMutations('usersModule',['modificarUsuActivo']),
         logOut(){
             this.modificarUsuActivo(null);
+            if (localStorage.getItem('items')!==null && localStorage.getItem('items')){
+                localStorage.removeItem('items')
+            }    
         }
     },
     computed:{

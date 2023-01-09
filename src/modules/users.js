@@ -16,7 +16,7 @@ export default {
     },
     mutations: {
         modificarUsuActivo(state, nuevoUsuario){
-            state.usuarioActivo=nuevoUsuario;
+            state.usuarioActivo=nuevoUsuario; 
         },
         desloguearUsuario(state){
             state.usuarioActivo=null;

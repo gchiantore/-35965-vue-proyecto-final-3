@@ -1,18 +1,18 @@
 <template>
     <div class="dashboard-container p-5">
         <DashBoardCardComponent icono="bi bi-list-columns-reverse" nombre="Productos Activos" :cantidad="cantProduct"/>
-        <DashboardCardComponent icono="bi bi-people-fill" nombre="Usuarios Activos" :cantidad="cantUsuarios"/>
-        <DashboardCardComponent icono="bi bi-cart-check-fill" nombre="Ordenes realizadas" :cantidad="cantOrdenes"/>
+        <DashBoardCardComponent icono="bi bi-people-fill" nombre="Usuarios Activos" :cantidad="cantUsuarios"/>
+        <DashBoardCardComponent icono="bi bi-cart-check-fill" nombre="Ordenes realizadas" :cantidad="cantOrdenes"/>
     </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import DashBoardCardComponent from '@/components/DashBoardCardComponent.vue'
-import axios from 'axios'
 export default {
         name:'DashboardAdmComponent',
         components:{
-            DashBoardCardComponent,
+                DashBoardCardComponent
             
         },
         data(){
@@ -26,32 +26,44 @@ export default {
             }    
         },
         created(){
-            const URLAPIUSER="https://639e8f4e3542a261305d989b.mockapi.io/users";
-            axios.get(URLAPIUSER)
-                .then(response => response.data)
-                .then(data =>{
-                    this.users = data
-                    this.cantUsuarios=this.users.length
-                })
+            this.getUserApi()
+            this.getProductosApi()
+            this.getOrdenApi()
+            setTimeout(() => {
+                console.log(this.getListaUsuarios())
+            this.cantUsuarios=this.getListaUsuarios().length
+            console.log(this.getListaProductos())
+            this.cantProduct=this.getListaProductos().length
+            console.log(this.getListaOrdenes())
+            this.cantOrdenes=this.getListaOrdenes().length
+            }, 1000);
             
-            const URLAPICARRITO="https://639e8f4e3542a261305d989b.mockapi.io/carritodetalle";
-            axios.get(URLAPICARRITO)
-                .then(response => response.data)
-                .then(data =>{
-                    this.carrito = data
-                    this.cantOrdenes=this.carrito.length
-                })  
-                
-            const URLAPIPRODUCTOS="https://639e8f4e3542a261305d989b.mockapi.io/productos";
-            axios.get(URLAPIPRODUCTOS)
-                .then(response => response.data)
-                .then(data =>{
-                    this.product = data
-                    this.cantProduct=this.product.length
-                })     
-                
-                
         },
+        methods:{
+            ...mapActions(
+                'usersModule',
+                ['getUserApi']
+                ),
+            ...mapGetters(
+                'usersModule',
+                ['getListaUsuarios']
+                ),
+            ...mapActions(
+                'productsModule',
+                ['getProductosApi']
+                ),
+            ...mapGetters(
+                'productsModule',
+                ['getListaProductos']
+                ),
+            ...mapActions(
+                'ordersModule',
+                ['getOrdenApi']
+                ),
+            ...mapGetters('ordersModule',
+                ['getListaOrdenes']
+                )
+        }
 }
 </script>
 
