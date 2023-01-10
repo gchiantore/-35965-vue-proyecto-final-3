@@ -30,7 +30,7 @@
                 this.cantOrdenes=carritousuario.length
                 this.impTotal=this.calculototal(carritousuario)
                 this.cantProduct=this.calculoproductos(carritousuario)
-            }, 2000);
+            }, 4000);
                 
 
         },

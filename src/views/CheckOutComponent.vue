@@ -32,7 +32,7 @@
         <div v-else>
             <div class="col-md-12 text-center p-3">
                 <h2>No hay items en el carrito</h2>
-                <button @click="listaproductos()" class="btn btn-success m-3"> ir a comprar ...</button>
+                <button @click="seguirComprando()" class="btn btn-success m-3"> ir a comprar ...</button>
                 
             </div>
             
@@ -60,10 +60,12 @@ export default {
         }    
     },
     created(){
-            this.carritodetalle=JSON.parse(localStorage.getItem('items'))
-            if (this.carritodetalle.length>0){
+            
+            if (JSON.parse(localStorage.getItem('items'))){
+                this.carritodetalle=JSON.parse(localStorage.getItem('items'))
                 this.carritovacio=1
             }else{
+                
                 this.carritovacio=0
             }
             this.usuario=this.getUsuActivo()
@@ -83,7 +85,6 @@ export default {
             this.carrito.items=this.carritodetalle
             this.carrito.total=total
             this.postOrdenApi(this.carrito)
-            console.log (this.objproducto)
             this.$swal.fire({
                             position: 'top-end',
                             icon: 'success',
