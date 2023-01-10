@@ -31,7 +31,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(product, i) of products" :key="i">
+                            <tr v-for="(product, i) of actualizaLista" :key="i">
                                 <th scope="row">{{product.id}}</th>
                                 <td><img class="avatar" :src="product.imagen" alt=""></td>
                                 <td>{{product.name}}</td>
@@ -69,7 +69,6 @@
         },
         created(){
             this.getProductosApi()
-            this.products=this.getListaProductos()
         },
 
         methods:{
@@ -101,7 +100,6 @@
                     }).then((result) => {
                     if (result.isConfirmed) {
                         this.deleteProductosApi(id)
-                        this.getProductosApi()
                         this.$swal.fire(
                         'El producto '+id+'.',
                         'Ha sido eliminado',
@@ -110,6 +108,12 @@
                     }
                 })
             },
+        },
+        computed:{
+            actualizaLista(){
+                this.getProductosApi()
+                return this.getListaProductos()
+            }
         },
 }   
 

@@ -26,23 +26,17 @@ export default {
         }
     },
     actions: {
-        getUserApi: function({ commit }){
+        getUserApi: async function({ commit }){
             const URLAPI="https://639e8f4e3542a261305d989b.mockapi.io/users";
-            axios.get(URLAPI)
-                .then(response => response.data)
-                .then(data =>{
-                    const usuarios = data
-                    commit('cargarUsuarios',usuarios)
-                })
+            const respuesta = await axios.get(URLAPI)
+            const usuarios = respuesta.data
+            commit('cargarUsuarios',usuarios)
         },
-        postUserApi: function({ commit }, user){
-        const URLPOST="https://639e8f4e3542a261305d989b.mockapi.io/users"
-                axios.post(URLPOST, user)
-                    .then(resp => resp.data)
-                    .then(data=>{
-                        const usuarios = data
-                        commit('cargarUsuarios',usuarios)
-                    })
+        postUserApi: async function({ commit }, user){
+            const URLPOST="https://639e8f4e3542a261305d989b.mockapi.io/users"
+            const respuesta = await axios.post(URLPOST, user)
+            const usuarios = respuesta.data
+            commit('cargarUsuarios',usuarios)
         }
     },
 }

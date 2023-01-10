@@ -15,23 +15,17 @@ export default {
         }
     },
     actions: {
-        getOrdenApi: function({ commit }){
+        getOrdenApi: async function({ commit }){
             const URLAPI="https://639e8f4e3542a261305d989b.mockapi.io/carritodetalle";
-            axios.get(URLAPI)
-                .then(response => response.data)
-                .then(data =>{
-                    const ordenes = data
-                    commit('cargarOrdenes',ordenes)
-                })
+            const respuesta= await axios.get(URLAPI)
+            const ordenes = respuesta.data
+            commit('cargarOrdenes',ordenes)
         },
-        postOrdenApi: function({ commit }, orden){
-        const URLPOST="https://639e8f4e3542a261305d989b.mockapi.io/carritodetalle"
-                axios.post(URLPOST, orden)
-                    .then(resp => resp.data)
-                    .then(data=>{
-                        const ordenes = data
-                        commit('cargarOrdenes',ordenes)
-                    })
+        postOrdenApi: async function({ commit }, orden){
+            const URLPOST="https://639e8f4e3542a261305d989b.mockapi.io/carritodetalle"
+            const respuesta= await axios.post(URLPOST, orden)
+            const ordenes = respuesta.data
+            commit('cargarOrdenes',ordenes)
         }
     },
 }    

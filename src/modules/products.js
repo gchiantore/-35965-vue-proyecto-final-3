@@ -16,48 +16,29 @@ export default {
         }
     },
     actions: {
-        getProductosApi: function({ commit }){
+        getProductosApi: async function({ commit }){
             const URLAPI="https://639e8f4e3542a261305d989b.mockapi.io/productos";
-            axios.get(URLAPI)
-                .then(response => response.data)
-                .then(data =>{
-                    const productos = data
-                    commit('cargarProductos',productos)
-                })
+            const respuesta=await axios.get(URLAPI)
+            const productos = respuesta.data
+            commit('cargarProductos',productos)
         },
-        postProductosApi: function({ commit }, producto){
-        const URLPOST="https://639e8f4e3542a261305d989b.mockapi.io/productos"
-                axios.post(URLPOST, producto)
-                    .then(resp => resp.data)
-                    .then(data=>{
-                        const productos = data
-                        commit('cargarProductos',productos)
-                    })
+        postProductosApi: async function({ commit }, producto){
+            const URLPOST="https://639e8f4e3542a261305d989b.mockapi.io/productos"
+            const respuesta = await axios.post(URLPOST, producto)
+            const productos = respuesta.data
+            commit('cargarProductos',productos)
         },
-        deleteProductosApi: function ({ commit }, producto){
+        deleteProductosApi: async function ({ commit }, producto){
             const URLDELETE="https://639e8f4e3542a261305d989b.mockapi.io/productos/"+producto
-            console.log(URLDELETE)
-                axios.delete(URLDELETE)
-                .then(resp => resp.data)
-                    .then(data=>{
-                        const productos = data
-                        commit('cargarProductos',productos)
-                    })
+            const respuesta = await axios.delete(URLDELETE)
+            const productos = respuesta.data
+            commit('cargarProductos',productos)
         },
-        putProductosApi: function ({commit},prod){
+        putProductosApi: async function ({commit},prod){
             const URLPUT="https://639e8f4e3542a261305d989b.mockapi.io/productos/"+prod.id
-            console.log(URLPUT)
-            console.log('>>>>')
-            console.log(prod)
-            console.log('>>>>')
-                axios
-                    .put(URLPUT, prod)
-                    .then(resp => resp.data)
-                    .then(data=>{
-                        const productos = data
-                        console.log(productos)
-                        commit('cargarProductos',productos)
-                        });
+            const respuesta = await axios.put(URLPUT, prod)
+            const productos = respuesta.data
+            commit('cargarProductos',productos)
         }
     },
 }    

@@ -23,8 +23,8 @@
                         <label for="tipo" class="form-label">Tipo Usuario</label>
                         <select v-model="user.tipo" class="form-select" id="tipo">
                             <option selected disabled value=""></option>
-                            <option value="false">Cliente</option>
-                            <option value="true">Administrador</option>
+                            <option value=false>Cliente</option>
+                            <option value=true>Administrador</option>
                         </select>
                     </div>
                     <div class="mb-2">
@@ -95,7 +95,7 @@ export default {
             if(!this.user.nombre){
                 this.errores.push("Tu Nombre es necesario para el regustro");
             }
-            if(!this.user.tipo){
+            if(this.user.tipo==""){
                 this.errores.push("Falta definir el tipo de Usuario");
             }
             if(!this.user.email){
