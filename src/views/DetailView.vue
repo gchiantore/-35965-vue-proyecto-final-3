@@ -1,32 +1,37 @@
 <template>
     <div>
         <div v-if="getUsuActivo===null">
-            <LogInComponent />
+        <LogInComponent />
         </div>
         <div v-else class="contenedor">
             <div class="container content">
-                <h1 class="titulo">Lista de Ordenes Generadas</h1>
-                <ListaOrdenes />
-            </div>    
-        </div>
-    </div>
+                <h1 class="titulo">Estas son nuestras pizzas!! </h1>
+                <ProductDetailComponent />
+            </div>
+        </div>    
+    </div>    
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
-    import LogInComponent from '@/components/LogInComponent.vue'
-    import ListaOrdenes from '@/components/ListaOrdenes.vue';
-    export default {
-        name: 'OrdenesView',
-        components:{
-            ListaOrdenes,
-            LogInComponent,
-        },
+import {mapGetters} from 'vuex'
+import LogInComponent from '@/components/LogInComponent.vue'
+import ProductDetailComponent from '@/components/ProductDetailComponent.vue';
+export default {
+    name: 'ProductosView',
+    props:{
+        paso:Boolean,
+    },
+        
+    components:{
+    LogInComponent,
+    ProductDetailComponent
+},
     computed:{
     ...mapGetters('usersModule',['getUsuActivo'])
     }
 }
 </script>
+
 
 <style scoped>
     .contenedor{

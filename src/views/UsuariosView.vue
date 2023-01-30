@@ -30,7 +30,6 @@
         width: 100vw;
         height: 100vh;
         display: flex;
-        align-items: center;
         justify-content: center;
         background-color: rgb(235, 232, 232);;
         background-image: url("@/assets/fondo.png");
@@ -39,10 +38,10 @@
 .content{
     padding: 15px;
     display: flex;
-    flex-direction: row;
-    column-gap: 15px;
+    flex-direction: column;
     row-gap: 15px;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    align-items: center;
     flex-wrap: wrap;
     background-color: white;
     margin-bottom: 0px;

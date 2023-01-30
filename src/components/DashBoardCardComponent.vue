@@ -6,7 +6,7 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title text-secondary">{{nombre}}</h5>
-                <h1 class="indi-text text-success">{{cantidad}}</h1>
+                <h1 class="indi-text text-success">{{cantidad.toFixed(2)}}</h1>  
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         color:darkgrey;
     }
     .indi-text{
-        font-size: 72px;
+        font-size: 52px;
         text-align: center;
     }
 </style>

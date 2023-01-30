@@ -1,0 +1,229 @@
+<template>
+    <div>
+        <div class="cartContainer position-relative" @click="checkOut()"> <!-- data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" -->
+            <i class="bi bi-cart"></i>
+            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-success" v-if="itemsCarrito > 0">{{itemsCarrito}}</span>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Mi Carrito</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body contenedorVista">
+            <div>
+                <i class="bi bi-cart cart-big"></i>
+            </div>
+            <div class="container">
+                <table class="table table-border-none table-hover">
+                    <thead>
+                        <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">cant</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) of carritodetalle" :key="index">
+                            <td>{{item.producto }}</td>
+                            <td>
+                                <div class="cantidad">
+                                    <button @click="restarCantidad(index)" class="restar">
+                                        -
+                                    </button>
+                                    {{item.cantidad}}
+                                    <button @click="sumarCantidad(index)" class="sumar">
+                                        +
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <i @click="eliminarProducto(item.prodid)" class="bi bi-trash3-fill eliminar"></i> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container d-flex">
+                <h5>Total : {{ subtotalcarrito }}</h5>
+            </div>
+            <div class="container d-flex justify-content-center m-2">
+                <button @click="checkOut" class="btn btn-success" data-bs-dismiss="offcanvas" aria-label="Close">listo Compro !</button>
+            </div>
+        </div>
+</div>
+    </div>
+</template>
+
+<script>
+import { mapGetters, mapMutations } from 'vuex'
+export default {
+    name:'CartIconComponent',
+    data(){
+        return{
+            togle:"offcanvas",
+            carritodetalle:Object,
+            carritovacio:0,
+            totalcarrito:0,
+        }
+    },    
+    created(){
+        let cantidadItems=0
+        if (JSON.parse(localStorage.getItem('items'))){
+                cantidadItems=JSON.parse(localStorage.getItem('items')).length
+            }else{
+                cantidadItems=0
+            }
+        this.inicializarItems(cantidadItems)
+        this.actualizarListaStore()
+    },
+    beforeUpdate(){
+        this.actualizarListaStore()
+    },
+    methods:{
+        ...mapGetters('carritoModule',['getCantidadCarrito']),
+        ...mapMutations('carritoModule',['inicializarItems', 'sacaritem']),
+
+        actualizarListaStore(){
+            this.subtotalcarrito=0
+            this.carritodetalle={}
+            if (JSON.parse(localStorage.getItem('items'))){
+                this.carritodetalle=JSON.parse(localStorage.getItem('items'))
+                this.carritovacio=1
+                console.log(this.carritodetalle.length)
+                this.subtotalcarrito=0
+                for(let i=0;i<this.carritodetalle.length;i++){
+                    this.subtotalcarrito=this.subtotalcarrito+this.carritodetalle[i].importe
+                } 
+                console.log('ACTUALIZAR LISTA STORE')
+            }else{
+                
+                this.carritovacio=0
+            }
+            this.propina=this.subtotalcarrito*0.10
+            this.totalcarrito=this.subtotalcarrito+this.propina
+        },
+
+        eliminarProducto(id){
+
+            this.$swal.fire({
+                    title: 'Estas Seguro??',
+                    text: "Se va a eliminar el producto " + id + ", del carrito",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si!, Borralo'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.carritodetalle=this.carritodetalle.filter(item => item.prodid != id)
+                        localStorage.setItem('items',JSON.stringify(this.carritodetalle))
+                        this.actualizarListaStore()
+                        this.sacaritem()
+                        this.$swal.fire(
+                        'El producto '+id+'.',
+                        'Ha sido eliminado',
+                        'success'
+                        )
+                    }
+                })
+        },
+
+        sumarCantidad(index){
+            this.carritodetalle[index].cantidad++
+            this.carritodetalle[index].importe=this.carritodetalle[index].precio*this.carritodetalle[index].cantidad
+            localStorage.setItem('items',JSON.stringify(this.carritodetalle))
+            this.actualizarListaStore()
+        },
+        restarCantidad(index){
+            if (this.carritodetalle[index].cantidad==1){
+                this.eliminarProducto(this.carritodetalle[index].prodid)
+            }else{
+                this.carritodetalle[index].cantidad--
+                this.carritodetalle[index].importe=this.carritodetalle[index].precio*this.carritodetalle[index].cantidad
+                localStorage.setItem('items',JSON.stringify(this.carritodetalle))
+                this.actualizarListaStore()
+            }
+        },
+        checkOut(){
+            this.$router.push('/carrito')
+        }
+
+    },
+
+    computed:{
+        itemsCarrito(){
+            console.log('get Cantidad Carrito '+ this.getCantidadCarrito())
+            return this.getCantidadCarrito()
+        },
+    }
+}
+</script>
+
+<style scoped>
+    .cartContainer {
+        background-color: black;
+        color: white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-top:10px;
+        margin-left: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .cartContainer i{
+        font-size: 20px;
+        cursor:hand;
+    }
+
+    .contenedorVista{
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+
+
+    }
+
+    .cart-big{
+        font-size: 100px;
+    }
+
+    .cantidad{
+        display: flex;
+        flex-direction: row;
+
+    }
+    .restar{
+        text-align: center;
+        background-color: red;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        color:white;
+        cursor: hand;
+        border:none;
+    }
+    .sumar{
+        text-align: center;
+        background-color: green;
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        color:white;
+        cursor: hand;
+        border:none;
+    }
+    .eliminar{
+        cursor: hand;
+    }
+
+</style>

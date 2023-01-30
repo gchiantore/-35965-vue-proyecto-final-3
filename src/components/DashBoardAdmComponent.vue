@@ -1,8 +1,8 @@
 <template>
     <div class="dashboard-container p-5">
-        <DashBoardCardComponent icono="bi bi-list-columns-reverse" nombre="Productos Activos" :cantidad="cantProduct"/>
-        <DashBoardCardComponent icono="bi bi-people-fill" nombre="Usuarios Activos" :cantidad="cantUsuarios"/>
-        <DashBoardCardComponent icono="bi bi-cart-check-fill" nombre="Ordenes realizadas" :cantidad="cantOrdenes"/>
+        <DashBoardCardComponent icono="bi bi-list-columns-reverse" nombre="Productos Activos" :cantidad="calculoDashboard.cantProduct"/>
+        <DashBoardCardComponent icono="bi bi-people-fill" nombre="Usuarios Activos" :cantidad="calculoDashboard.cantUsuarios"/>
+        <DashBoardCardComponent icono="bi bi-cart-check-fill" nombre="Ordenes realizadas" :cantidad="calculoDashboard.cantOrdenes"/>
     </div>
 </template>
 
@@ -29,15 +29,6 @@ export default {
             this.getUserApi()
             this.getProductosApi()
             this.getOrdenApi()
-            setTimeout(() => {
-                console.log(this.getListaUsuarios())
-            this.cantUsuarios=this.getListaUsuarios().length
-            console.log(this.getListaProductos())
-            this.cantProduct=this.getListaProductos().length
-            console.log(this.getListaOrdenes())
-            this.cantOrdenes=this.getListaOrdenes().length
-            }, 1000);
-            
         },
         methods:{
             ...mapActions(
@@ -63,7 +54,31 @@ export default {
             ...mapGetters('ordersModule',
                 ['getListaOrdenes']
                 )
-        }
+        },
+        computed:{
+            calculoDashboard(){
+                    const dashboard={}
+                    const usuarios=this.getListaUsuarios()
+                    if (usuarios){
+                        dashboard.cantUsuarios=usuarios.length
+                    }else{
+                        dashboard.cantOrdenes=0
+                    }
+                    const productos=this.getListaProductos()
+                    if (productos){
+                        dashboard.cantProduct=this.getListaProductos().length
+                    }else{
+                        dashboard.cantProduct=0
+                    }
+                    const ordenes=this.getListaOrdenes()
+                    if (ordenes){
+                        dashboard.cantOrdenes=this.getListaOrdenes().length
+                    }else{
+                        dashboard.cantOrdenes=0
+                    }
+                    return dashboard
+                }
+        },    
 }
 </script>
 
@@ -74,5 +89,6 @@ export default {
         justify-content: space-between;
         flex-wrap: wrap;
         row-gap: 30px;
+        column-gap: 30px;
     }
 </style>

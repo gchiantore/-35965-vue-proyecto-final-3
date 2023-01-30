@@ -22,8 +22,8 @@
                     <div>
                         <label for="tipo" class="form-label">Tipo Usuario</label>
                         <select v-model="user.tipo" class="form-select" id="tipo">
-                            <option selected disabled value=""></option>
-                            <option value=false>Cliente</option>
+                            <!-- <option selected disabled value=""></option> -->
+                            <option selected value=false>Cliente</option>
                             <option value=true>Administrador</option>
                         </select>
                     </div>
@@ -60,7 +60,7 @@ export default {
             user:{
                 nombre:'',
                 nacimiento:'',
-                tipo:false,
+                tipo:Boolean,
                 email:'',
                 pass:''
             },
@@ -80,7 +80,7 @@ export default {
                     setTimeout(() => {
                         this.postUserApi(this.user)
                         this.getUserApi()
-                        document.getElementById("userform").reset();
+                        /* document.getElementById("userform").reset(); */
                         Object.assign(this.$data, this.$options.data());
                     }, 1000);
                     this.$swal.fire('El registro fue exitoso, ya te podes loguear')

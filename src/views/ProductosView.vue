@@ -3,17 +3,19 @@
         <div v-if="getUsuActivo===null">
         <LogInComponent />
         </div>
-        <div v-else class="container content">
-            <h1 class="titulo">Lista de Productos a Comprar</h1>
-            <listaProductoCompras />
-        </div>
+        <div v-else class="contenedor-prod">
+            <div class="container content">
+                <h1 class="titulo">Estas son nuestras pizzas!! </h1>
+                <ListaProductosCompras />
+            </div>
+        </div>    
     </div>    
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 import LogInComponent from '@/components/LogInComponent.vue'
-import listaProductoCompras from '@/components/ListaProductosCompras.vue'
+import ListaProductosCompras from '@/components/ListaProductosCompras.vue';
 export default {
     name: 'ProductosView',
     props:{
@@ -21,9 +23,9 @@ export default {
     },
         
     components:{
-        listaProductoCompras,
-        LogInComponent
-    },
+    LogInComponent,
+    ListaProductosCompras
+},
     computed:{
     ...mapGetters('usersModule',['getUsuActivo'])
     }
@@ -32,16 +34,22 @@ export default {
 
 
 <style scoped>
+    .contenedor-prod{
+        display: flex;
+        justify-content: center;
+        background-color: rgb(235, 232, 232);;
+        background-image: url("@/assets/fondo.png");
+        background-repeat: repeat;
+    }
     .content{
         padding: 15px;
         display: flex;
         flex-direction: row;
-        column-gap: 15px;
         row-gap: 15px;
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        align-items: center;
         flex-wrap: wrap;
         background-color: white;
-        margin-bottom: 0px;
         box-shadow: 5px 5px 10px #888888;
     }
     .titulo{

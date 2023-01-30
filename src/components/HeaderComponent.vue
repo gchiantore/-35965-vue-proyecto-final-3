@@ -40,7 +40,7 @@
     .header-derecho{
         display:flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
     }
     .header-div{
         display:flex;

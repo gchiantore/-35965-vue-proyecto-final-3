@@ -1,15 +1,16 @@
 <template>
-  <div class="contenedor">
+  <div>
     <div v-if="getUsuActivo===null">
       <LogInComponent />
     </div>
-    <div v-else>
-      <div class="container content">
+    <div v-else  class="contenedor">
+      <div class="content container">
         <div v-if="getUsuActivo.tipo">
           <h1 class="titulo">Dashboard de Administrador</h1>
           <DashBoardAdmComponent />
         </div>
         <div v-else>
+          <h1 class="titulo">Dashboard del CLiente</h1>
           <DashBoardCustomerComponent />
         </div>
       </div>
@@ -27,8 +28,8 @@ export default {
   components: {
     LogInComponent,
     DashBoardAdmComponent,
-    DashBoardCustomerComponent,
-  },
+    DashBoardCustomerComponent
+},
   computed:{
     ...mapGetters('usersModule',['getUsuActivo'])
   }
@@ -40,7 +41,6 @@ export default {
         width: 100vw;
         height: 100vh;
         display: flex;
-        align-items: center;
         justify-content: center;
         background-color: rgb(235, 232, 232);;
         background-image: url("@/assets/fondo.png");
@@ -50,10 +50,10 @@ export default {
   .content{
     padding: 15px;
     display: flex;
-    flex-direction: row;
-    column-gap: 15px;
+    flex-direction: column;
     row-gap: 15px;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    align-items: center;
     flex-wrap: wrap;
     background-color: white;
     margin-bottom: 0px;

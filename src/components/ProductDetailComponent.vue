@@ -1,51 +1,62 @@
 <template>
-    <div>
-        <div class="row row-cols-1 row-cols-md-4 g-4">    
-            <div v-for="(product, i) of products" :key="i" class="col">
-                <div class="card h-100 w-100">
-                    <img :src="product.imagen" class="card-img-top ratio ratio-4x3" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{product.name}}</h5>
-                        <p class="card-text text-center fw-bold text-danger">$ {{product.precio}}</p>
-                        <div class="accion">
-                            <button @click="agregarCarrito(product.id)" class="btn btn-success center"><i class="bi bi-cart"></i> Agregar</button>
-                            <i @click="cambiarRuta({path:`/productos/${product.id}`})" class="bi bi-info-circle-fill fs-2"></i>
+<div>
+    <div class="card mb-3" >
+        <div class="row g-0">
+            <div class="col-md-6">
+                <img :src="getProduct.imagen" class="card-img-top ratio ratio-4x3" alt="...">
+            </div>
+            <div class="col-md-6 info-container">
+                <div class="card-body texto">
+                    <div class="botones mb-5">
+                        <div class="precio">
+                            <h3>{{getProduct.name}}</h3>
                         </div>
+                        <div class="accion">
+                            <i @click="volver()" class="bi bi-arrow-left-circle-fill fs-2"></i>
+                        </div>
+                    </div>
+                    <p class="card-text">{{ getProduct.desc }}</p>
+                </div>
+                <div class="card-body botones">
+                    <div class="precio">
+                        <h4 class="card-text fw-bold text-danger">$ {{getProduct.precio}}</h4>
+                    </div>
+                    <div class="accion">
+                        <button @click="agregarCarrito(getProduct.id)" class="btn btn-success center"><i class="bi bi-cart"></i> Agregar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>    
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 export default {
-    name:'ListaProductosCompras',
+    name:'ProductDetailComponent',
     data(){
         return{
             products:Object,
             prod:Object,
             user:Object,
             itemcarrito:{
-            userid:'',
-            prodid:'',
-            producto:'',
-            cantidad:'',
-            avatar:'',
-            precio:0,
-            importe:0
+                userid:'',
+                prodid:'',
+                producto:'',
+                cantidad:'',
+                avatar:'',
+                precio:0,
+                importe:0
             },
-            items:[]
-        }
+            items:[] 
+        } 
     },
+
     created(){
-            this.getUserApi()
-            this.getProductosApi()
-            setTimeout(() => {
-                this.products = this.getListaProductos()
-                this.user=this.getUsuActivo()  
-            }, 2000);
+        this.getUserApi()
+        this.getProductosApi()
+        this.products=this.getListaProductos()
     },
     methods:{
         ...mapActions('usersModule',['getUserApi']),
@@ -54,8 +65,8 @@ export default {
         ...mapGetters('productsModule',['getListaProductos']),
         ...mapMutations('carritoModule',['poneritem']),
 
-        cambiarRuta(ruta){
-            this.$router.push(ruta);
+        volver(){
+            this.$router.push("/productos");
         },
 
         agregarCarrito(id)
@@ -109,12 +120,42 @@ export default {
                 this.poneritem()   
             }
         },
-    }
+
+    },
+   
+    computed:{
+        getProduct(){
+            const producto=this.getListaProductos().filter(p => (p.id == this.$route.params.id))
+            return producto[0]
+        }
+    },
 }
+
 </script>
 
 <style scoped>
     .accion{
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: 15px;
+    }
+    .precio{
+        width: 60%;
+    }
+    .info-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .texto{
+        height: 80%;
+    }
+    .botones{
+        width: 100%;
         display: flex;
         flex-direction: row;
         align-content: center;

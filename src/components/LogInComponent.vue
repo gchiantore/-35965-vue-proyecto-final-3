@@ -1,29 +1,32 @@
 <template>
-    <div class="contenedor">
-        <div class="login-container">
-            <div class="login-header">
-                <img class="login-img mb-5" src="@/assets/logo-app.png" alt="">
-                <h3 class="text-center mb-3">Ingreso a la App</h3>
-            </div>
-            <div class="login-form" id="loginform">
-                <form action="" @submit.prevent="logValidate" id="loginForm">
-                    <div class="mb-2">
-                        <label for="email" class="form-label">Tu e-mail</label>
-                        <input v-model="email" type="email" class="form-control" id="email"> 
-                    </div>
-                    <div class="mb-3">
-                        <label for="pass" class="form-label">Password</label>
-                        <input v-model="pass" type="password" class="form-control" id="pass">
-                    </div>
-                    <button type="submit" class="btn btn-success float-end">Ingresar</button>
-                </form>
-            </div>  
-            <div class="login-footer">
-                <hr class="mb-1">
-                <p class="text-center text-secondary mb-1 fs-6">No tenes cuenta, No te preocupes hace clic <a @click="registro()" href="#">Aqui</a> y crea una</p>
+        <div class="contenedor">
+            <div class="login-container">
+                <div class="login-header">
+                    <img class="login-img mb-5" src="@/assets/logo-app.png" alt="">
+                    <h3 class="text-center mb-3">Ingreso a la App</h3>
+                </div>
+                <div v-if="error" class="alert alert-danger" role="alert">
+                    Ups! el usuario o la contraseña no son correctos
+                </div>
+                <div class="login-form" id="loginform">
+                    <form action="" @submit.prevent="logValidate" id="loginForm">
+                        <div class="mb-2">
+                            <label for="email" class="form-label">Tu e-mail</label>
+                            <input v-model="email" type="email" class="form-control" id="email"> 
+                        </div>
+                        <div class="mb-3">
+                            <label for="pass" class="form-label">Password</label>
+                            <input v-model="pass" type="password" class="form-control" id="pass">
+                        </div>
+                        <button type="submit" class="btn btn-success float-end">Ingresar</button>
+                    </form>
+                </div>  
+                <div class="login-footer">
+                    <hr class="mb-1">
+                    <p class="text-center text-secondary mb-1 fs-6">No tenes cuenta, No te preocupes hace clic <a @click="registro()" href="#">Aqui</a> y crea una</p>
+                </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -34,7 +37,8 @@ export default {
     data() {
         return {
             email:'',
-            pass:''
+            pass:'',
+            error:false
         }
     },
     created(){
@@ -56,6 +60,11 @@ export default {
                 this.modificarUsuActivo(encontrado);
                 Object.assign(this.$data, this.$options.data);
                 document.getElementById("loginForm").reset();
+            } else {
+                this.error=true
+                setTimeout(() => {
+                    this.error=false
+                }, 4000);
             }
         },
         registro(){

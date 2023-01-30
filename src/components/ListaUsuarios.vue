@@ -1,5 +1,5 @@
 <template>
-    <div class="card col-md-8 mb-5" >
+    <div class="card col-md-8" >
         <div class="card-header">
             Usuarios
         </div>
