@@ -53,7 +53,7 @@ Cliente :
 usuario: cleinte@example.net
 contraseña: 1234
 ```
-# Instalacio para desarrolladores 
+# Instalacion para desarrolladores 
 
 Esta App esta hecha en Vue, se han usado ademas 
 * Bootstrap para los estilos
@@ -61,6 +61,8 @@ Esta App esta hecha en Vue, se han usado ademas
 * Vuex para el store
 * Sweet Alert 2 para los mensajes y alertas
 * Vue Router para el manejo de rutas 
+
+* Se utilizo Mockapi.io para simular el Back end.
 
 
 ## Project setup
