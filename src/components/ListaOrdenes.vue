@@ -30,7 +30,11 @@
                                         <td>{{new Date(item.fecha).toLocaleDateString()}}</td>
                                         <td>{{item.username.toUpperCase()}}</td>
                                         <td class="text-center">$ {{item.total.toFixed(2)}}</td>
-                                        <td class="text-center"> <i @click="enviarOrden(item)" class="bi bi-truck"></i> | <i @click="cancelarOrden(item)" class="bi bi-x-circle"></i></td>
+                                        <td class="text-center">
+                                            <i @click="enviarOrden(item)" class="bi bi-truck"></i> | 
+                                            <i @click="cancelarOrden(item)" class="bi bi-x-circle"></i> | 
+                                            <i @click="verProductosEnOrden(item.id)" class="bi bi-eye"></i> 
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -68,7 +72,10 @@
                                         <td>{{new Date(item.fecha).toLocaleDateString()}}</td>
                                         <td>{{item.username.toUpperCase()}}</td>
                                         <td class="text-end">$ {{item.total.toFixed(2)}}</td>
-                                        <td class="text-center"> <i class="bi bi-cart-check"></i> </td>
+                                        <td class="text-center"> 
+                                            <i class="bi bi-cart-check"></i> | 
+                                            <i @click="verProductosEnOrden(item.id)" class="bi bi-eye"></i>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -93,6 +100,23 @@
         methods:{
             ...mapGetters('ordersModule',['getListaOrdenes']),
             ...mapActions('ordersModule',['putOrdenApi','getOrdenApi']),
+
+
+            verProductosEnOrden(orderId){
+                let ordenAver={}
+                this.getListaOrdenes()
+                ordenAver=this.getListaOrdenes().filter(ord => (ord.id === orderId))
+                this.$swal.fire({
+                        title: 'Orden #'+ordenAver[0].id+' de '+ordenAver[0].username,
+                        icon: 'info',
+                        html: this.construirHtml(ordenAver[0].items),
+                        showCloseButton: true,
+                        focusConfirm: false,
+                        confirmButtonText:
+                            'OK!',
+                        confirmButtonAriaLabel: 'Thumbs up, great!',
+                })
+            },
 
             enviarOrden(orden){
                 orden.pendiente=false
@@ -127,6 +151,35 @@
                     }
                 })
             },
+
+            construirHtml(items){
+                let tableHtml='<div class="items-cart">'+
+                                '    <table class="table">'+
+                                '        <thead>'+
+                                '            <tr>'+
+                                '                <th scope="col">#</th>'+
+                                '                <th scope="col">Producto</th>'+
+                                '                <th scope="col">Cantidad</th>'+
+                                '                <th scope="col">Precio</th>'+
+                                '                <th scope="col">Importe</th>'+
+                                '               <th scope="col"></th>'+
+                                '            </tr>'+
+                                '        </thead>'+
+                                '        <tbody>'
+                for (let i=0; i<items.length ;i++){
+                    tableHtml=tableHtml + '             <tr>'+
+                                            '                <th scope="row">'+items[i].prodid+'</th>'+
+                                            '                <td>'+items[i].producto+'</td>'+
+                                            '                <td class="text-center">'+items[i].cantidad+'</td>'+
+                                            '                <td class="text-end">'+parseInt(items[i].precio).toFixed(2).toLocaleString()+'</td>'+
+                                            '                <td class="text-end">'+parseInt(items[i].importe).toFixed(2).toLocaleString()+'</td>'+
+                                            '           </tr>'
+                }
+                tableHtml = tableHtml + '        </tbody>'+
+                                        '    </table>'+
+                                        '</div>'
+                return tableHtml                        
+            }
         },   
         computed:{
             ordenesPendientes(){
@@ -156,3 +209,5 @@
         border-radius: 50%;
     }
 </style>
+
+
