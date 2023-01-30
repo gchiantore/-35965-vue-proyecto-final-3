@@ -22,7 +22,6 @@
             }    
         },
         created(){
-            console.log('Pasa por el create del Dash')
             this.getOrdenApi()
             
         },
@@ -52,16 +51,12 @@
         computed:{
             calculoDashboard(){
                 let dashboard={}
-                console.log('getListaOrdenesAntesDelIF')
-                console.log(this.getListaOrdenes())
+
                 if (this.getListaOrdenes().length==0){
                     dashboard.cantOrdenes=0
                     dashboard.impTotal=0
                     dashboard.cantProduct=0
-                    console.log('Esta vacia la lista')
                 }else{
-                    console.log('la lista esta llena')
-                    console.log(this.getListaOrdenes())
                     let carritousuario=this.getListaOrdenes().filter(car => (car.userid === this.getUsuActivo().id))
                     if (carritousuario){
                         dashboard.cantOrdenes=carritousuario.length

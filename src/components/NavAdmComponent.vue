@@ -24,22 +24,22 @@ export default {
 
 <style scoped>
     .header{
-          background-color: #a70303;
-          height: 40px;
-      }
-      .bg-red{
         background-color: #a70303;
-      }
-      .center{
+        height: 40px;
+    }
+    .bg-red{
+        background-color: #a70303;
+    }
+    .center{
         display: flex;
         align-items:center;
         justify-content: center;
-      }
-      .navbar{
+    }
+    .navbar{
         background-color: #a70303;
-          height: 40px;
-      }
-      .container-navigation{
+        height: 40px;
+    }
+    .container-navigation{
         color:white;
-      }
+    }
 </style>

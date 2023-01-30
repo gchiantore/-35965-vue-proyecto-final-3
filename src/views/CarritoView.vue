@@ -40,17 +40,17 @@ export default {
         background-repeat: repeat;
     }
     .content{
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    row-gap: 15px;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    background-color: white;
-    margin-bottom: 0px;
-    box-shadow: 5px 5px 10px #888888;
-  }
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        background-color: white;
+        margin-bottom: 0px;
+        box-shadow: 5px 5px 10px #888888;
+    }
     .titulo{
         width: 100%;
         text-align: center;

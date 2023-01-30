@@ -12,7 +12,6 @@ export default {
     mutations: {
         poneritem(state){
             state.cantidadItems=state.cantidadItems+1
-            console.log('poneritem --> ' + state.cantidadItems)
         },
         sacaritem(state){
             state.cantidadItems=state.cantidadItems-1

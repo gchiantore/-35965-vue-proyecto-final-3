@@ -7,7 +7,6 @@ export default {
     },
     getters: {
         getUsuActivo(state){
-            console.log(state.usuarioActivo)
             return state.usuarioActivo
         },
         getListaUsuarios(state){

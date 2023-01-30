@@ -100,7 +100,6 @@ export default {
                         Object.assign(this.$data, this.$options.data());
                 }else{
                         this.postProductosApi(this.objproducto)
-                        console.log (this.objproducto)  
                         this.$swal.fire({
                             position: 'top-end',
                             icon: 'success',

@@ -27,14 +27,14 @@
 </script>
 <style scoped>
 .contenedor{
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        background-color: rgb(235, 232, 232);;
-        background-image: url("@/assets/fondo.png");
-        background-repeat: repeat;
-    }
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(235, 232, 232);;
+    background-image: url("@/assets/fondo.png");
+    background-repeat: repeat;
+}
 .content{
     padding: 15px;
     display: flex;

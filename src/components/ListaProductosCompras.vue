@@ -72,7 +72,6 @@ export default {
             if (localStorage.getItem('items')!==null && localStorage.getItem('items')){
                 storageItem = JSON.parse(localStorage.getItem('items'))
                 let index=storageItem.findIndex(item => item.prodid===this.itemcarrito.prodid)
-                console.log(index)
                 if (index<0){
                     storageItem.push(this.itemcarrito)
                     this.$swal.fire({

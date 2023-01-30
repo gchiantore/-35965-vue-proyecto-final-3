@@ -41,7 +41,6 @@ export default {
 
     computed:{
         itemsCarrito(){
-            console.log('get Cantidad Carrito '+ this.getCantidadCarrito())
             return this.getCantidadCarrito()
         },
     }

@@ -52,11 +52,8 @@ export default {
         ...mapActions('usersModule',['getUserApi']),
 
         logValidate(){
-            console.log(this.getListaUsuarios())
             const encontrado = this.getListaUsuarios().find((usuario) => (usuario.email==this.email && usuario.pass==this.pass));
-            console.log(encontrado)
             if(encontrado){
-                console.log(encontrado)
                 this.modificarUsuActivo(encontrado);
                 Object.assign(this.$data, this.$options.data);
                 document.getElementById("loginForm").reset();

@@ -137,7 +137,6 @@ export default {
             if (JSON.parse(localStorage.getItem('items'))){
                 this.carritodetalle=JSON.parse(localStorage.getItem('items'))
                 this.carritovacio=1
-                console.log(this.carritodetalle.length)
                 this.subtotalcarrito=0
                 for(let i=0;i<this.carritodetalle.length;i++){
                     this.subtotalcarrito=this.subtotalcarrito+this.carritodetalle[i].importe
